@@ -10,6 +10,7 @@ use std::env;
 use hyper::{Body, Client, Method, Request, Response, Server, StatusCode};
 use hyper::client::connect::Connect;
 use hyper::service::{make_service_fn, service_fn};
+use hyper::header::HeaderValue;
 
 use futures_util::TryStreamExt;
 
@@ -126,9 +127,13 @@ async fn dispatcher(req: Request<Body>) -> Result<Response<Body>, hyper::Error> 
                         match sensore.dati.iter().last() {
                             Some(dati) => v[&sensore._type] = Value::from(dati.vm),
                             None => {},
-                        }
+                        }   
                     }
-                    Ok(Response::new(Body::from(v.to_string())))
+                    let mut res = Response::new(Body::from(v.to_string()));
+                    let headers = res.headers_mut();
+                    headers.insert("Access-Control-Allow-Origin", HeaderValue::from_static("*"));
+                    headers.insert("Content-Type", HeaderValue::from_static("application/json"));
+                    Ok(res)
                 },
                 Err(e) => {
                     let mut error = Response::new(Body::from(e));
