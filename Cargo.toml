@@ -1,0 +1,16 @@
+[package]
+name = "arpav"
+version = "0.1.0"
+authors = ["Marco Napetti <marco.napetti@athonet.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = "=0.2.0-alpha.4"
+futures-util-preview = "=0.3.0-alpha.18"
+hyper = "=0.13.0-alpha.1"
+chrono = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+serde-xml-rs = "0.3"
+serde_json = "1.0"
